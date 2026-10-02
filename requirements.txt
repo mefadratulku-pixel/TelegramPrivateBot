@@ -1,6 +1,6 @@
 Pyrofork==2.3.68
-TgCrypto
 Pyleaves
 python-dotenv
 psutil
 pillow
+rich

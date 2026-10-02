@@ -15,6 +15,40 @@ def get_download_path(folder_id: int, filename: str, root_dir: str = "downloads"
     return os.path.join(folder, filename)
 
 
+# Map media type keywords to folder names
+MEDIA_TYPE_FOLDERS = {
+    "photo": "Photos",
+    "video": "Videos",
+    "audio": "Audio",
+    "document": "Documents",
+}
+
+
+def file_exists_in_save_dir(save_dir: str, channel_name: str, filename: str, media_type: str = "document") -> str:
+    """Return the exact destination path if it exists, otherwise None."""
+    type_folder = MEDIA_TYPE_FOLDERS.get(media_type, "Documents")
+    dest = os.path.join(save_dir, channel_name, type_folder, filename)
+    if os.path.exists(dest):
+        return dest
+    return None
+
+
+def get_save_path(save_dir: str, channel_name: str, filename: str, media_type: str = "document") -> str:
+    """Return path like SavedMedia/<channel_name>/Videos/<filename>, creating dirs as needed."""
+    type_folder = MEDIA_TYPE_FOLDERS.get(media_type, "Documents")
+    folder = os.path.join(save_dir, channel_name, type_folder)
+    os.makedirs(folder, exist_ok=True)
+    dest = os.path.join(folder, filename)
+    # Avoid overwriting: append _1, _2, etc.
+    if os.path.exists(dest):
+        base, ext = os.path.splitext(filename)
+        counter = 1
+        while os.path.exists(dest):
+            dest = os.path.join(folder, f"{base}_{counter}{ext}")
+            counter += 1
+    return dest
+
+
 def cleanup_download(path: str) -> None:
     try:
         LOGGER(__name__).info(f"Cleaning Download: {path}")

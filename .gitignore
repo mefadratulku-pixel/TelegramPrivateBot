@@ -1,15 +1,44 @@
-*__pycache__*
-*.session*
-*.vscode*
-.env
-config.env.local
-*.log
-*.json
-*.html
-./*.py
-test.py
-.osgrep
-osgrep
-downloads
-Assets
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# Telegram Session Files
+*.session
+*.session-journal
+
+# Local Downloads, Media & Database
+downloads/
+SavedMedia/
+downloads_history.db
+
+# Logs & Temporary files
 logs.txt
+*.log
+
+# Environment & Sensitive Credentials (NEVER COMMIT)
+config.env
+config.env.local
+.env
+*.env
+.env.*
+
+# Proxy credentials lists
+BDIX PROXY/
+
+# Scratch & Test scripts
+test_proxy.py
+scratch_dotenv.py
+test.py
+
+# Editor & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
